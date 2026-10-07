@@ -1,0 +1,89 @@
+class Person:
+    def __init__(self, fname, lname, age, program):
+        self.fname = fname
+        self.lname = lname
+        self.age = age
+        self.program = program
+
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[0]
+    left = []
+    right = []
+
+    for item in arr[1:]:
+        if item.lower() <= pivot.lower():
+            left.append(item)
+        else:
+            right.append(item)
+            
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+def quick_sort_people(arr, choice):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[0]
+    left = []
+    right = []
+
+    for person in arr[1:]:
+
+        if choice == "1":
+            value = person.age
+            pivot_value = pivot.age
+
+        elif choice == "2":
+            value = person.fname.lower()
+            pivot_value = pivot.fname.lower()
+
+        elif choice == "3":
+            value = person.lname.lower()
+            pivot_value = pivot.lname.lower()
+
+        else:
+            value = person.program.lower()
+            pivot_value = pivot.program.lower()
+
+        if value <= pivot_value:
+            left.append(person)
+        else:
+            right.append(person)
+
+    return quick_sort_people(left, choice) + [pivot] + quick_sort_people(right, choice)
+
+
+names = ["Kira", "Kc", "Blaise", "Angel", "Kendra"]
+
+print("Original Names:")
+print(names)
+
+print("\nSorted Names:")
+print(quick_sort(names))
+
+
+person_1 = Person("Kira", "Quimbo", 21, "BSIT")
+person_2 = Person("Kc", "Olchondra", 18, "BSMath")
+person_3 = Person("Angel", "Castillo", 45, "BSTM")
+person_4 = Person("Kendra", "Santos", 30, "BSCS")
+
+people = [person_1, person_2, person_3, person_4]
+
+print("\nSort by:")
+print("1. Age")
+print("2. First Name")
+print("3. Last Name")
+print("4. Program")
+
+choice = input("Enter your choice: ")
+
+people = quick_sort_people(people, choice)
+
+print("\nSorted Persons:")
+
+for person in people:
+    print(person.fname, person.lname, person.age, person.program)
